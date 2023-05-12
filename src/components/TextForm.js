@@ -45,17 +45,22 @@ export default function TextForm(props) {
     const handleCopy = (e) => {
         var text = document.getElementById("mytextbox");
         text.select();
-        text.setSelectionRange(0, 9999);
         navigator.clipboard.writeText(text.value);
+        document.getSelection().removeAllRanges();
         props.showAlert(" Text Copied", "success");
 
         e.preventDefault();
     }
 
 
-    const words = text.trim().split(/\s+/);
+    // const words = text.trim().split(/\s+/);
+    const words = text.split(" ").filter((element)=>{return element.length!==0});
     const wordCount = words.length;
     const charCount = text.length;
+
+    let summaryStyle ={
+        fontSize: '10px'
+    }
 
 
 
@@ -70,16 +75,18 @@ export default function TextForm(props) {
                             color: props.Mode === "dark" ? "white" : "black"
                         }}></textarea>
                     </div>
-                    <button className="btn btn-primary mx-1" onClick={handleClick}>Convert Upper</button>
-                    <button className="btn btn-primary mx-1" onClick={handleClick2}>Convert Lower</button>
-                    <button className="btn btn-primary mx-1" onClick={handleClear}>Clear text</button>
-                    <button className='btn btn-primary mx-1' onClick={removeSpace}>RemveExtraSpaces</button>
-                    <button className='btn btn-primary mx-1' onClick={handleCopy}>Copy</button>
+                    <button disabled={text.length===0} className="btn btn-primary mx-1 my-1" onClick={handleClick}>Convert Upper</button>
+                    <button disabled={text.length===0}className="btn btn-primary mx-1 my-1" onClick={handleClick2}>Convert Lower</button>
+                    <button disabled={text.length===0}className="btn btn-primary mx-1 my-1" onClick={handleClear}>Clear text</button>
+                    <button disabled={text.length===0}className='btn btn-primary mx-1 my-1' onClick={removeSpace}>RemveExtraSpaces</button>
+                    <button disabled={text.length===0}className='btn btn-primary mx-1 my-1' onClick={handleCopy}>Copy</button>
                 </form>
-                <div className="summary">
+                <div className="summary" style={summaryStyle}>
                     <h2>Summary of text</h2>
                     <p>The Words in text is {wordCount}</p>
                     <p>The characters in text is {charCount} </p>
+                    <p>{(text.split(" ").filter((element)=>{return element.length!==0}).length*0.008)} Minuts to read</p>
+
                     <h3>Preview</h3>
                     <p>{text.length > 0 ? text : "Preview of text will be appear hare."}</p>
                 </div>

@@ -16,7 +16,7 @@ export default function Navbar(props) {
         <li className="nav-item active">
         <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span></Link>
       </li>
-      <li className="nav-item active">
+      <li className="nav-item ">
         <Link className="nav-link" to="/about">{props.aboutText}</Link>
       </li>
 
